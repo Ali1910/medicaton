@@ -30,5 +30,11 @@ namespace medicaton.repository
         {
             return saved>0?true:false;
         }
+
+        public bool updatemedication()
+        {
+            return save(_dataContext.SaveChanges());
+
+        }
     }
 }

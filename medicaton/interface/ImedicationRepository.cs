@@ -11,5 +11,8 @@ namespace medicaton
         Medication GetMedicationbyname(string medicationName);
         //for get request
         ICollection<Medication> GetMedications();
+
+        //for update
+        bool updatemedication();
     }
 }

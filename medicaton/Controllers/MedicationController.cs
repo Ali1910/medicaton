@@ -9,9 +9,11 @@ namespace medicaton.Controllers
     public class MedicationController : ControllerBase
     {
         private readonly ImedicationRepository _medicationRepository;
-        public MedicationController(ImedicationRepository imedicationRepository)
+        private readonly IwarningRepository iwarningRepository;
+        public MedicationController(ImedicationRepository imedicationRepository, IwarningRepository iwarningRepository)
         {
             _medicationRepository = imedicationRepository;
+            iwarningRepository = iwarningRepository;
         }
         [HttpGet]
         public IActionResult Getallmedications() 
@@ -58,5 +60,31 @@ namespace medicaton.Controllers
                 return BadRequest("medication already exist");
             }
         }
+        [HttpPut]
+        public IActionResult updateMedicationt([FromQuery]Medication medication, [FromQuery] string oldmedicationName) 
+        {
+            var medicationexist=_medicationRepository.GetMedicationbyname(oldmedicationName);
+            if(medicationexist != null)
+            {
+                medicationexist.Name = medication.Name;
+                medicationexist.about = medication.about;
+                medicationexist.EnglishName = medication.EnglishName;
+                medicationexist.usedfor=medication.usedfor;
+                try {
+                    
+                    _medicationRepository.updatemedication();
+                    return Ok("medication Updated");
+                }
+                catch (Exception ex) {
+                    return BadRequest($"medication can't be updated because{ex.ToString()}");
+                }
+            }
+            else
+            {
+                return BadRequest("this medication not exist so it can't be updated ");
+            }
+        }
     }
+ 
+
 }

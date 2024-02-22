@@ -43,6 +43,11 @@ namespace medicaton.repository
             
         }
 
+        public ICollection<MedicationWarningJoin> getwarningformedication(string medicationName)
+        {
+            return dataContext1.medicationWarningJoins.Where(w=>w.MedicationName==medicationName).ToList();
+        }
+
         public ICollection<Warning> GetWarnings()
         {
             return dataContext1.warnings.ToList();

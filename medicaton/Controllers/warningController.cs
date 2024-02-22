@@ -29,11 +29,24 @@ namespace medicaton.Controllers
 
 
         }
-        [HttpGet("getMedicationByName")]
+        [HttpGet("getwarningByName")]
         public IActionResult GetwarningbyName([FromQuery] string warningname)
         {
 
             var warning = _warningrepo.GetWarning(warningname);
+            if (warning != null)
+            {
+                return Ok(warning);
+            }
+            else { return Ok("no warning with that name"); }
+
+
+        }
+        [HttpGet("getwarningsforMedication")]
+        public IActionResult GetwarningsforMedciation([FromQuery] string Medicationname)
+        {
+
+            var warning = _warningrepo.getwarningformedication(Medicationname);
             if (warning != null)
             {
                 return Ok(warning);
